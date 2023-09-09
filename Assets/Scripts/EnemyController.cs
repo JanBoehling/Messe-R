@@ -80,9 +80,10 @@ public class EnemyController : MonoBehaviour
                         enemyState = State.SearchStanding;
                         Debug.Log("Changed Enemy State to SearchStanding");
                     }
-
-                    if(Vector3.Distance(player.transform.position, transform.position) <= 1.5f)
+                    
+                    if (Vector3.Distance(player.transform.position, transform.position) <= 2.5f)
                     {
+                        
                         if(GameManager.Instance != null)
                             GameManager.Instance.GameOver();
                     }
