@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
         set
         {
             organCounter = value;
-            uiManager.AddOrgan(organIcons[organCounter - 1], organCounter);
         }
     }
     private int organCounter;
@@ -26,7 +25,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
 
     [SerializeField] private Sprite[] organIcons;
-    
+
+    public void AddOrganIcon(OrganType organType) => uiManager.AddOrgan(organIcons[(int)organType], organCounter);
 
     public void RaiseOrganCounter()
     {
