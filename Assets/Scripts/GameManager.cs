@@ -33,6 +33,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
 
     [SerializeField] private Sprite[] organIcons;
+    
+
+    public void RaiseOrganCounter()
+    {
+        OrganCounter++;
+    }
 
     private void Awake()
     {
