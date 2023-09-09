@@ -7,8 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
+    public bool EnemyCanSpawn = false;
     public bool IsEnemySpawned = false;
     public int CounterOfOrgans;
+    [Tooltip("In Seconds")]
+    public float StartSpawnCooldown = 20f;
 
     public void GameOver()
     {
@@ -55,10 +58,17 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-    }   
-    
-    public void GhostSpeedUp()
+    }
+
+    private void Start()
     {
-        ghost.speed++;
+        StartCoroutine(WaitForGhostspawning());
+    }
+
+    IEnumerator WaitForGhostspawning()
+    {
+        yield return new WaitForSeconds(StartSpawnCooldown);
+        EnemyCanSpawn = true;
+        Debug.Log("Now the enemy can spawn!");
     }
 }

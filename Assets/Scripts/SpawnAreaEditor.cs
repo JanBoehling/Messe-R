@@ -26,6 +26,6 @@ public class SpawnAreaEditor : Editor
 
         // Draw the follow radius circle
         Handles.color = Color.blue;
-        Handles.DrawWireDisc(spawnArea.transform.position, Vector3.up, spawnArea.FollowRadius);
+        Handles.DrawWireDisc(spawnArea.transform.position, Vector3.up, spawnArea.StartSpawnRadius);
     }
 }
