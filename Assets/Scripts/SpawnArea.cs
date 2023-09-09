@@ -9,11 +9,11 @@ public class SpawnArea : MonoBehaviour
 {
     [Range(5.0f, 100.0f)]
     public float SpawnRadius = 30;
-    [Range(5.0f, 100.0f)]
+    [Range(0.0f, 100.0f)]
     [Tooltip("Must be smaller then SpawnRadius")]
     public float InnerRadiusOffset = 5;
     [Range(5.0f, 200.0f)]
-    public float FollowRadius = 50;
+    public float StartSpawnRadius = 50;
     [Range(10.0f, 50.0f)]
     public float SpawnDistanceToPlayer = 15;
 
@@ -72,9 +72,12 @@ public class SpawnArea : MonoBehaviour
         if (GameManager.Instance.IsEnemySpawned)
             return;
 
+        if (GameManager.Instance.EnemyCanSpawn == false)
+            return;
+       
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-        if (distanceToPlayer <= SpawnRadius)
+        if (distanceToPlayer <= StartSpawnRadius)
         {
             float angle = Mathf.Acos((SpawnRadius * SpawnRadius + distanceToPlayer * distanceToPlayer - SpawnDistanceToPlayer * SpawnDistanceToPlayer) / (2 * SpawnRadius * SpawnDistanceToPlayer));
 
