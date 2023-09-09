@@ -1,12 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
     public bool IsEnemySpawned = false;
+    public int CounterOfOrgans;
+
+    public void GameOver()
+    {
+        //Gameover Scene Laden. Check in BuildSettings
+        SceneManager.LoadScene(4);
+    }
+
+    public void WonGame()
+    {
+        DataHolder.GameOverMessage = "Du hast es geschafft, der Geist der Vergangenen Weinacht ist wieder eingesperrt.";
+    }
 
     /// <summary>
     /// Counts how many organs the player collected
@@ -23,14 +36,13 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private EnemyController ghost;
     [SerializeField] private UIManager uiManager;
-
     [SerializeField] private Sprite[] organIcons;
 
     public void AddOrganIcon(OrganType organType) => uiManager.AddOrgan(organIcons[(int)organType], organCounter);
 
     public void RaiseOrganCounter()
     {
-        OrganCounter++;
+        organCounter++;
     }
 
     private void Awake()
