@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
+    public bool IsEnemySpawned = false;
+
     /// <summary>
     /// Counts how many organs the player collected
     /// </summary>
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour
     }
     private int organCounter;
 
-    [SerializeField] private Ghost ghost;
+    [SerializeField] private EnemyController ghost;
     [SerializeField] private UIManager uiManager;
 
     [SerializeField] private Sprite[] organIcons;
