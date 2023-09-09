@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InterctableUI : MonoBehaviour
 {
+    public UnityEvent OnInteractEvent = new UnityEvent();
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -14,7 +18,7 @@ public class InterctableUI : MonoBehaviour
             {
                 if (collider.TryGetComponent(out PickUpOrgan pickedUp))
                 {
-                    pickedUp.DestroyObject();
+                    OnInteractEvent?.Invoke();
                 }
             }
         }
