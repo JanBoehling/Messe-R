@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         set
         {
             organCounter = value;
-            uiManager.AddOrgan(organIcons[organCounter], organCounter);
+            uiManager.AddOrgan(organIcons[organCounter - 1], organCounter);
         }
     }
     private int organCounter;
