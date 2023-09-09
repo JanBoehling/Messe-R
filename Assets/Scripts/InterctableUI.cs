@@ -19,6 +19,7 @@ public class InterctableUI : MonoBehaviour
                 if (collider.TryGetComponent(out PickUpOrgan pickedUp))
                 {
                     pickedUp.DestroyObject();
+                    GameManager.Instance.AddOrganIcon(pickedUp.Organ);
                     OnInteractEvent?.Invoke();
                 }
             }

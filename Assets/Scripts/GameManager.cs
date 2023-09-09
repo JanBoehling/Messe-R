@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(4);
     }
 
+    public void WonGame()
+    {
+        DataHolder.GameOverMessage = "Du hast es geschafft, der Geist der Vergangenen Weinacht ist wieder eingesperrt.";
+    }
+
     /// <summary>
     /// Counts how many organs the player collected
     /// </summary>
@@ -25,7 +30,6 @@ public class GameManager : MonoBehaviour
         set
         {
             organCounter = value;
-            uiManager.AddOrgan(organIcons[organCounter - 1], organCounter);
         }
     }
     private int organCounter;
@@ -33,7 +37,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private EnemyController ghost;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private Sprite[] organIcons;
-    
+
+    public void AddOrganIcon(OrganType organType) => uiManager.AddOrgan(organIcons[(int)organType], organCounter);
 
     public void RaiseOrganCounter()
     {
