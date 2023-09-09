@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class GameManager : MonoBehaviour
 
     public bool IsEnemySpawned = false;
     public int CounterOfOrgans;
+
+    public void GameOver()
+    {
+        //Gameover Scene Laden. Check in BuildSettings
+        SceneManager.LoadScene(4);
+    }
 
     /// <summary>
     /// Counts how many organs the player collected
