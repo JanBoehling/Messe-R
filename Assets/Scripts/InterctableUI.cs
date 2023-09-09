@@ -18,6 +18,7 @@ public class InterctableUI : MonoBehaviour
             {
                 if (collider.TryGetComponent(out PickUpOrgan pickedUp))
                 {
+                    pickedUp.DestroyObject();
                     OnInteractEvent?.Invoke();
                 }
             }
