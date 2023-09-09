@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public void WonGame()
     {
         DataHolder.GameOverMessage = "Du hast es geschafft, der Geist der Vergangenen Weihnacht ist wieder eingesperrt.";
+        SceneManager.LoadScene(4);
     }
 
     /// <summary>

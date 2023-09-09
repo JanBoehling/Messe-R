@@ -6,9 +6,11 @@ public class PlayerInteractibleUI : MonoBehaviour
 {
     [SerializeField] GameObject containerGO;
     [SerializeField] InterctableUI interctableUI;
+    [SerializeField] FillingTheCorpse corpsesFilled;
+
     private void Update()
     {
-        if (interctableUI.ItemIneractabel() != null)
+        if (interctableUI.ItemIneractabel() != null || interctableUI.CorpseBeFilled() != null)
         {
             Show();
         }

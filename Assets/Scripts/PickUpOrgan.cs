@@ -5,11 +5,14 @@ using UnityEngine;
 public class PickUpOrgan : MonoBehaviour
 {
     [SerializeField] private OrganType organType;
+    [SerializeField] FillingTheCorpse fillingCorpses;
+
     public OrganType Organ => organType;
     
     public void DestroyObject()
     {
         Destroy(gameObject);
+        fillingCorpses.counterOfOrgans++;
     }
 }
 

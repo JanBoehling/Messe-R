@@ -6,6 +6,12 @@ using UnityEngine;
 public class FillingTheCorpse : MonoBehaviour
 {
     public int counterOfOrgans;
+    [SerializeField] GameObject[] organsOfTheCorpse;
+
+    private void Update()
+    {
+        FillingItWithOrgans();
+    }
 
     private void FillingItWithOrgans()
     {
@@ -17,16 +23,30 @@ public class FillingTheCorpse : MonoBehaviour
                 Collider[] colliderarray = Physics.OverlapSphere(transform.position, talkradius);
                 foreach (Collider collider in colliderarray)
                 {
+                    Debug.Log("ColliderHit");
                     if (collider.TryGetComponent(out FillingTheCorpse fillingup))
                     {
-                        GameManager.Instance.WonGame();
+                        Debug.Log("Component there");
+                        StartCoroutine(SpawningThemOrgans());
                     }
                 }
             }
         }
+
     }
-    
+
+    private IEnumerator SpawningThemOrgans()
+    {
+        for (int i = 0; i <= organsOfTheCorpse.Length -1; i++)
+        {
+            organsOfTheCorpse[i].SetActive(true);
+            yield return new WaitForSeconds(2f);
+        }
+        GameManager.Instance.WonGame();
+        yield return null;
+    }
 
 
-    
+
+
 }
