@@ -16,12 +16,13 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         //Gameover Scene Laden. Check in BuildSettings
+        DataHolder.GameOverMessage = "Du hast verkackt";
         SceneManager.LoadScene(4);
     }
 
     public void WonGame()
     {
-        DataHolder.GameOverMessage = "Du hast es geschafft, der Geist der Vergangenen Weinacht ist wieder eingesperrt.";
+        DataHolder.GameOverMessage = "Du hast es geschafft, der Geist der Vergangenen Weihnacht ist wieder eingesperrt.";
     }
 
     /// <summary>
