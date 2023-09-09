@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(4);
     }
 
+    public void WonGame()
+    {
+        DataHolder.GameOverMessage = "Du hast es geschafft, der Geist der Vergangenen Weinacht ist wieder eingesperrt.";
+    }
+
     /// <summary>
     /// Counts how many organs the player collected
     /// </summary>
