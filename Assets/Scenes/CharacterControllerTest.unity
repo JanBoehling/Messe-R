@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 2073267}
   - component: {fileID: 2073266}
   - component: {fileID: 2073265}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -643,10 +643,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5877c9d39deae4c8d18ca572c14a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyCanSpawn: 0
   IsEnemySpawned: 0
+  CounterOfOrgans: 0
+  StartSpawnCooldown: 20
   ghost: {fileID: 0}
   uiManager: {fileID: 0}
-  organIcons: []
 --- !u!4 &734925408
 Transform:
   m_ObjectHideFlags: 0
@@ -918,7 +920,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawnRadius: 14.57
   InnerRadiusOffset: 5
-  FollowRadius: 38.7
+  StartSpawnRadius: 50
   SpawnDistanceToPlayer: 15
 --- !u!1 &1128962137
 GameObject:
@@ -1724,6 +1726,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce77ab101c43dc3459ec3eaf6c86ed69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  organType: 0
+  fillingCorpses: {fileID: 0}
 --- !u!64 &8079203145951395279
 MeshCollider:
   m_ObjectHideFlags: 0
