@@ -13,6 +13,13 @@ public class PlayerMovement : MonoBehaviour
     private float baseHeight;
     private bool isSneaking;
 
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
         baseHeight = transformPlayer.localScale.y;
@@ -31,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        audioSource.Play();
+
         transform.Translate(new Vector3(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime));
 
         if (Input.GetKeyDown(KeyCode.LeftShift))

@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HowToPlayMenuNoob.unity
     guid: c4c418ec3e128df4498acf474dd6dc2b
+  - enabled: 1
+    path: Assets/Scenes/Cutscenescene.unity
+    guid: ebec96f657fd2354292cc51b1ea5c3ec
   m_configObjects: {}
