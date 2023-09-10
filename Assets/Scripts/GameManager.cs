@@ -41,9 +41,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private EnemyController ghost;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private Sprite[] organIcons;
 
-    public void AddOrganIcon(OrganType organType) => uiManager.AddOrgan(organIcons[(int)organType], organCounter);
+    public void AddOrganIcon(OrganType organType) => uiManager.AddOrgan(organType, organCounter);
 
     public void RaiseOrganCounter()
     {
@@ -67,7 +66,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitForGhostspawning());
     }
 
-    IEnumerator WaitForGhostspawning()
+    private IEnumerator WaitForGhostspawning()
     {
         yield return new WaitForSeconds(StartSpawnCooldown);
         EnemyCanSpawn = true;
