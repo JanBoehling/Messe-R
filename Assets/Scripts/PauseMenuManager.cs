@@ -9,5 +9,11 @@ public class PauseMenuManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Escape)) TogglePauseMenu();
     }
 
-    public void TogglePauseMenu() => pauseMenu.SetActive(!pauseMenu.activeSelf);
+
+    public void TogglePauseMenu()
+    {
+        bool isActive = pauseMenu.activeSelf;
+        Cursor.lockState = isActive ? CursorLockMode.Locked : CursorLockMode.None;
+        pauseMenu.SetActive(!isActive);
+    }
 }
