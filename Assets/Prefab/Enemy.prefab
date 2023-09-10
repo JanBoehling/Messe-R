@@ -185,8 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d5af05949cdd04e90fab8efebc5347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableUI: {fileID: 0}
-  speed: 0
+  debugRayColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!195 &4022513474959211295
 NavMeshAgent:
   m_ObjectHideFlags: 0

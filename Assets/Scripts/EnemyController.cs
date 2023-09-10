@@ -32,6 +32,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        enemyState = State.Following;
         layerMaskValue = LayerMask.NameToLayer("LookThrough");
         navMeshAgent = GetComponent<NavMeshAgent>();
         initialSpeed = navMeshAgent.speed;

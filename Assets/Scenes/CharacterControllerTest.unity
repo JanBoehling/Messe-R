@@ -258,6 +258,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1093077102}
+  - {fileID: 1878750629}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &405051831
@@ -538,7 +539,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.4, y: 1.28, z: -2.11}
-  m_LocalScale: {x: 4.8537, y: 4.8537, z: 4.8537}
+  m_LocalScale: {x: 31.916475, y: 4.8537, z: 4.8537}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 558849886}
@@ -920,10 +921,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737708abd7066ed4bb6a43cf54305f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnRadius: 14.57
-  InnerRadiusOffset: 5
-  StartSpawnRadius: 50
-  SpawnDistanceToPlayer: 15
+  SpawnRadius: 11.7
+  InnerRadiusOffset: 4.9
+  StartSpawnRadius: 15.8
+  SpawnDistanceToPlayer: 16.7
 --- !u!1 &1128962137
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,6 +1354,54 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: fff9708ff814a824aad680b8533c7ddf, type: 2}
   m_BuildHeightMesh: 0
+--- !u!1 &1878750628
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1878750629}
+  - component: {fileID: 1878750630}
+  m_Layer: 0
+  m_Name: SpawnArea (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1878750629
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878750628}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -24.7, y: 0, z: 4.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 11589635}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1878750630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878750628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 737708abd7066ed4bb6a43cf54305f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnRadius: 11.7
+  InnerRadiusOffset: 4.9
+  StartSpawnRadius: 15.8
+  SpawnDistanceToPlayer: 16.7
 --- !u!1 &1928117520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1499,9 +1548,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1999813437479112902, guid: 62e83bf595b1a364682751b8fe4eb45e,
         type: 3}
+      propertyPath: OnInteractEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1999813437479112902, guid: 62e83bf595b1a364682751b8fe4eb45e,
+        type: 3}
       propertyPath: OnInteractEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 734925407}
+    - target: {fileID: 1999813437479112902, guid: 62e83bf595b1a364682751b8fe4eb45e,
+        type: 3}
+      propertyPath: OnInteractEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RaiseOrganCounter
+      objectReference: {fileID: 0}
     - target: {fileID: 5648658758088229084, guid: 62e83bf595b1a364682751b8fe4eb45e,
         type: 3}
       propertyPath: m_LocalPosition.y

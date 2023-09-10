@@ -12,10 +12,10 @@ public class SpawnArea : MonoBehaviour
     [Range(0.0f, 100.0f)]
     [Tooltip("Must be smaller then SpawnRadius")]
     public float InnerRadiusOffset = 5;
-    [Range(5.0f, 200.0f)]
-    public float StartSpawnRadius = 50;
     [Range(10.0f, 50.0f)]
     public float SpawnDistanceToPlayer = 15;
+    [Range(10.0f, 100.0f)]
+    public float StartSpawnRadius = 50;
 
     private GameObject enemyPrefab;
     private GameObject player;
@@ -25,18 +25,15 @@ public class SpawnArea : MonoBehaviour
         return player; 
     }
 
-    private void Awake()
+    private void Start()
     {
         enemyPrefab = GameManager.Instance.EnemyPrefab;
 
-        if(enemyPrefab == null)
+        if (enemyPrefab == null)
         {
             Debug.LogError($"Could not get enemyPrefab from GameManager");
         }
-    }
 
-    private void Start()
-    {
         // Try to find the player GameObject with the "Player" tag
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -58,6 +55,9 @@ public class SpawnArea : MonoBehaviour
         if (player == null)
             return;
 
+        if (enemyPrefab == null)
+            return;
+
         if (GameManager.Instance == null)
             return;
 
@@ -71,9 +71,9 @@ public class SpawnArea : MonoBehaviour
 
         if (distanceToPlayer <= StartSpawnRadius)
         {
-            float angle = Mathf.Acos((SpawnRadius * SpawnRadius + distanceToPlayer * distanceToPlayer - SpawnDistanceToPlayer * SpawnDistanceToPlayer) / (2 * SpawnRadius * SpawnDistanceToPlayer));
+            //float angle = Mathf.Acos((SpawnRadius * SpawnRadius + distanceToPlayer * distanceToPlayer - SpawnDistanceToPlayer * SpawnDistanceToPlayer) / (2 * SpawnRadius * SpawnDistanceToPlayer));
 
-            float randomAngle = Random.Range(-angle, angle);
+            float randomAngle = Random.Range(0, 360);
             float randomDistance = Random.Range(InnerRadiusOffset, SpawnRadius);
 
             Vector3 spawnPosition = new Vector3(
@@ -82,9 +82,11 @@ public class SpawnArea : MonoBehaviour
                 transform.position.z + randomDistance * Mathf.Sin(randomAngle)
             );
 
+            //Debug.Log("Spawn Position: " + spawnPosition);
+
             // Ensure the spawn position is on the NavMesh
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(spawnPosition, out hit, SpawnRadius, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(spawnPosition, out hit, 30, NavMesh.AllAreas))
             {
                 // Spawn the enemy at the valid position
                 GameObject enemy = Instantiate(enemyPrefab, hit.position, Quaternion.identity);
