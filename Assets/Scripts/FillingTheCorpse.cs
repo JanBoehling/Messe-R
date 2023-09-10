@@ -7,46 +7,15 @@ public class FillingTheCorpse : MonoBehaviour
 {
     public int counterOfOrgans;
     [SerializeField] GameObject[] organsOfTheCorpse;
+    public int counterOfPresses;
+    public int maxPresses = 5;
 
-    private void Update()
+    public void SpawningThemOrgans()
     {
-        FillingItWithOrgans();
-    }
-
-    private void FillingItWithOrgans()
-    {
-        if (counterOfOrgans == 5)
+        organsOfTheCorpse[counterOfPresses -1].SetActive(true);
+        if (counterOfPresses == maxPresses)
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                float talkradius = 2.1f;
-                Collider[] colliderarray = Physics.OverlapSphere(transform.position, talkradius);
-                foreach (Collider collider in colliderarray)
-                {
-                    Debug.Log("ColliderHit");
-                    if (collider.TryGetComponent(out FillingTheCorpse fillingup))
-                    {
-                        Debug.Log("Component there");
-                        StartCoroutine(SpawningThemOrgans());
-                    }
-                }
-            }
+            GameManager.Instance.WonGame();
         }
-
     }
-
-    private IEnumerator SpawningThemOrgans()
-    {
-        for (int i = 0; i <= organsOfTheCorpse.Length -1; i++)
-        {
-            organsOfTheCorpse[i].SetActive(true);
-            yield return new WaitForSeconds(2f);
-        }
-        GameManager.Instance.WonGame();
-        yield return null;
-    }
-
-
-
-
 }
