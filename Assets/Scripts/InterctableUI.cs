@@ -8,6 +8,7 @@ public class InterctableUI : MonoBehaviour
 {
     public UnityEvent OnInteractEvent = new UnityEvent();
     [SerializeField] FillingTheCorpse corpseFilled;
+    int pressCounter;
 
     private void Update()
     {
@@ -58,7 +59,8 @@ public class InterctableUI : MonoBehaviour
 
     private void FillingItWithOrgans()
     {
-        if (corpseFilled.counterOfOrgans == corpseFilled.maxPresses && Input.GetKeyDown(KeyCode.E))
+
+        if (corpseFilled.counterOfOrgans == corpseFilled.maxPresses && Input.GetKeyDown(KeyCode.E) && corpseFilled.counterOfPresses < corpseFilled.maxPresses)
         {
             Debug.Log("E");
             corpseFilled.counterOfPresses++;
@@ -72,6 +74,8 @@ public class InterctableUI : MonoBehaviour
                 {
                     Debug.Log("Component there");
                     corpseFilled.SpawningThemOrgans();
+                    pressCounter++;
+                    Debug.Log($"{corpseFilled.counterOfPresses}");
                 }
             }
         }

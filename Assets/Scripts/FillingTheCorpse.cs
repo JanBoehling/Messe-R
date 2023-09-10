@@ -13,14 +13,13 @@ public class FillingTheCorpse : MonoBehaviour
 
     public void SpawningThemOrgans()
     {
-        organsOfTheCorpse[counterOfPresses -1].SetActive(true);
-        particleBlood.Play();
 
+        organsOfTheCorpse[counterOfPresses - 1].SetActive(true);
+        particleBlood.Play();
 
         if (counterOfPresses == maxPresses)
         {
-        StartCoroutine(WinningThemGame());
-
+            StartCoroutine(WinningThemGame());
         }
     }
 
