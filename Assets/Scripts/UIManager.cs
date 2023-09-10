@@ -11,21 +11,24 @@ public class UIManager : MonoBehaviour
 
     public void AddOrgan(OrganType organType, int index)
     {
-        if (index >= organTracker.childCount) return;
-        
         organTracker
-            .GetChild(index)
+            .GetChild((int)organType)
             .GetComponent<Image>().sprite = organIconsWhite[(int)organType];
+        //if (index >= organTracker.childCount) return;
 
-        organTypes[index] = organType;
+        //organTracker
+        //    .GetChild(index)
+        //    .GetComponent<Image>().sprite = organIconsWhite[(int)organType];
 
-        if (index != organTracker.childCount - 1) return;
+        //organTypes[index] = organType;
 
-        for (int i = 0; i < organTracker.childCount; i++)
-        {
-            organTracker
-            .GetChild(i)
-            .GetComponent<Image>().sprite = organIconsColored[(int)organTypes[i]];
-        }
+        //if (index != organTracker.childCount - 1) return;
+
+        //for (int i = 0; i < organTracker.childCount; i++)
+        //{
+        //    organTracker
+        //    .GetChild(i)
+        //    .GetComponent<Image>().sprite = organIconsColored[(int)organTypes[i]];
+        //}
     }
 }
