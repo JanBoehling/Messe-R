@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
+    public GameObject EnemyPrefab;
     public bool EnemyCanSpawn = false;
     public bool IsEnemySpawned = false;
     public int CounterOfOrgans;

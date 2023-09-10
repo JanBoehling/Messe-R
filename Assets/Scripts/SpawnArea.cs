@@ -18,10 +18,7 @@ public class SpawnArea : MonoBehaviour
     public float SpawnDistanceToPlayer = 15;
 
     private GameObject enemyPrefab;
-
     private GameObject player;
-
-    private const string ENEMY_ASSET_NAME = "Enemy";
 
     public GameObject GetPlayer()
     {
@@ -30,16 +27,11 @@ public class SpawnArea : MonoBehaviour
 
     private void Awake()
     {
-        string[] guids = AssetDatabase.FindAssets(ENEMY_ASSET_NAME);
+        enemyPrefab = GameManager.Instance.EnemyPrefab;
 
-        if(guids.Length > 0 )
+        if(enemyPrefab == null)
         {
-            string path = AssetDatabase.GUIDToAssetPath(guids[0]);
-            enemyPrefab = AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
-        }
-        else
-        {
-            Debug.LogError($"Could not find Enemy Asset with name {ENEMY_ASSET_NAME}");
+            Debug.LogError($"Could not get enemyPrefab from GameManager");
         }
     }
 

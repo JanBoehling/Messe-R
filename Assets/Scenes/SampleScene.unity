@@ -26860,6 +26860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5877c9d39deae4c8d18ca572c14a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 0}
   EnemyCanSpawn: 0
   IsEnemySpawned: 0
   CounterOfOrgans: 0
