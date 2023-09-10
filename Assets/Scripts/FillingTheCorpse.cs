@@ -6,27 +6,16 @@ using UnityEngine;
 public class FillingTheCorpse : MonoBehaviour
 {
     public int counterOfOrgans;
+    [SerializeField] GameObject[] organsOfTheCorpse;
+    public int counterOfPresses;
+    public int maxPresses = 5;
 
-    private void FillingItWithOrgans()
+    public void SpawningThemOrgans()
     {
-        if (counterOfOrgans == 5)
+        organsOfTheCorpse[counterOfPresses -1].SetActive(true);
+        if (counterOfPresses == maxPresses)
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                float talkradius = 2.1f;
-                Collider[] colliderarray = Physics.OverlapSphere(transform.position, talkradius);
-                foreach (Collider collider in colliderarray)
-                {
-                    if (collider.TryGetComponent(out FillingTheCorpse fillingup))
-                    {
-                        GameManager.Instance.WonGame();
-                    }
-                }
-            }
+            GameManager.Instance.WonGame();
         }
     }
-    
-
-
-    
 }

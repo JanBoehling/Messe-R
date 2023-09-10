@@ -7,8 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
+    public bool EnemyCanSpawn = false;
     public bool IsEnemySpawned = false;
     public int CounterOfOrgans;
+    [Tooltip("In Seconds")]
+    public float StartSpawnCooldown = 20f;
 
     public void GameOver()
     {
@@ -20,6 +23,7 @@ public class GameManager : MonoBehaviour
     public void WonGame()
     {
         DataHolder.GameOverMessage = "Du hast es geschafft, der Geist der Vergangenen Weihnacht ist wieder eingesperrt.";
+        SceneManager.LoadScene(4);
     }
 
     /// <summary>
@@ -37,9 +41,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private EnemyController ghost;
     [SerializeField] private UIManager uiManager;
-    [SerializeField] private Sprite[] organIcons;
 
-    public void AddOrganIcon(OrganType organType) => uiManager.AddOrgan(organIcons[(int)organType], organCounter);
+    public void AddOrganIcon(OrganType organType) => uiManager.AddOrgan(organType, organCounter);
 
     public void RaiseOrganCounter()
     {
@@ -56,10 +59,17 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-    }   
-    
-    public void GhostSpeedUp()
+    }
+
+    private void Start()
     {
-        ghost.speed++;
+        StartCoroutine(WaitForGhostspawning());
+    }
+
+    private IEnumerator WaitForGhostspawning()
+    {
+        yield return new WaitForSeconds(StartSpawnCooldown);
+        EnemyCanSpawn = true;
+        Debug.Log("Now the enemy can spawn!");
     }
 }

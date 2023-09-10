@@ -5,9 +5,6 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] InterctableUI interactableUI;
-    public float speed;
-
     public Color debugRayColor = Color.red; // Farbe für den Debug-Ray
 
     private SpawnArea activeSpawnArea = null;
@@ -17,7 +14,14 @@ public class EnemyController : MonoBehaviour
 
     private GameObject player;
 
+    private float maxViewDistance = 60f;
+
     private float elapsedTime = 0;
+
+    int layerMaskValue = 7; //LookThrough
+
+    private float speedMultiplier = 0.1f;
+    private float initialSpeed;
 
     private enum State
     {
@@ -28,7 +32,9 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        layerMaskValue = LayerMask.NameToLayer("LookThrough");
         navMeshAgent = GetComponent<NavMeshAgent>();
+        initialSpeed = navMeshAgent.speed;
         player =  GameObject.FindGameObjectWithTag("Player");
         if(player == null)
         {
@@ -54,6 +60,11 @@ public class EnemyController : MonoBehaviour
             Debug.LogError("ActiveSpawnArea missing.");
             return;
         }
+        
+        if(GameManager.Instance != null)
+        {
+            navMeshAgent.speed = initialSpeed + (GameManager.Instance.OrganCounter * speedMultiplier);
+        }
 
         switch (enemyState)
         {
@@ -61,9 +72,11 @@ public class EnemyController : MonoBehaviour
                 {
                     Vector3 playerDirection = player.transform.position - transform.position;
                     RaycastHit hit;
-
+#if UNITY_EDITOR
                     Debug.DrawRay(transform.position, playerDirection, debugRayColor, 0.1f);
-                    if (Physics.Raycast(transform.position, playerDirection, out hit))
+#endif
+                    Ray ray = new Ray(transform.position, playerDirection);
+                    if (Physics.Raycast(ray, out hit, maxViewDistance, ~layerMaskValue))
                     {
                         if (hit.collider.CompareTag("Player"))
                         {
@@ -80,10 +93,12 @@ public class EnemyController : MonoBehaviour
                         enemyState = State.SearchStanding;
                         Debug.Log("Changed Enemy State to SearchStanding");
                     }
-                    
-                    if (Vector3.Distance(player.transform.position, transform.position) <= 2.5f)
+
+                    Vector3 playerXZPos = player.transform.position;
+                    playerXZPos.y = 0;
+
+                    if (Vector3.Distance(playerXZPos, transform.position) <= 1.5f)
                     {
-                        
                         if(GameManager.Instance != null)
                             GameManager.Instance.GameOver();
                     }
@@ -92,11 +107,17 @@ public class EnemyController : MonoBehaviour
 
             case State.SearchStanding:
                 {
-                    Vector3 playerDirection = player.transform.position - transform.position;
+                    Vector3 playerXZPos = player.transform.position;
+                    playerXZPos.y = 0;
+
+                    Vector3 playerDirection = playerXZPos - transform.position;
                     RaycastHit hit;
 
+#if UNITY_EDITOR
                     Debug.DrawRay(transform.position, playerDirection, debugRayColor, 0.1f);
-                    if (Physics.Raycast(transform.position, playerDirection, out hit))
+#endif
+                    Ray ray = new Ray(transform.position, playerDirection);
+                    if (Physics.Raycast(ray, out hit, maxViewDistance, ~layerMaskValue))
                     {
                         if (hit.collider.CompareTag("Player"))
                         {
