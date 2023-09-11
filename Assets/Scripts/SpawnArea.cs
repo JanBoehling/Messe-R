@@ -38,12 +38,7 @@ public class SpawnArea : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         // Check if the player GameObject was found
-        if (player != null)
-        {
-            // Player exists, you can do something with it here
-            Debug.Log("Player GameObject found.");
-        }
-        else
+        if (player == null)
         {
             // Player doesn't exist, show an error message
             Debug.LogError("Player GameObject not found. Make sure it is tagged as 'Player' in the scene.");

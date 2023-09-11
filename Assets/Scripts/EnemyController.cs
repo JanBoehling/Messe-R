@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,18 @@ public class EnemyController : MonoBehaviour
     private float speedMultiplier = 0.1f;
     private float initialSpeed;
 
+    public AudioSource audioSource;
+    private float currentInterval;
+    public AudioClip heartbeatSound;  // The heartbeat audio clip
+    private float maxDistance;   // Maximum distance for the heartbeat to play
+    float baseInterval = 4f;   // Initial interval between heartbeats
+
+    private bool active = true;
+    private bool playHeartbeat = false;
+    private float elapsedTimeHeartbeat = 0f;
+
+    Coroutine coroutine;
+
     private enum State
     {
         Following,
@@ -33,6 +46,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        maxDistance = maxViewDistance;
         enemyState = State.Following;
         layerMaskValue = LayerMask.NameToLayer("LookThrough");
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -43,11 +57,36 @@ public class EnemyController : MonoBehaviour
         {
             Debug.LogError("Player Object with Tag Player could not be found.");
         }
+
+        currentInterval = baseInterval;
+    }
+
+    private void PlayHeartbeat()
+    {
+        if (playHeartbeat == false)
+            return;
+
+        if(audioSource != null && heartbeatSound != null)
+        {
+            Debug.Log("Play Heartbeat");
+            audioSource.PlayOneShot(heartbeatSound);
+        }
+        else
+        {
+            Debug.LogError("Heartbeat or AudioSource is null");
+        }
     }
 
     public void SetSpawnArea(SpawnArea spawnArea)
     {
         activeSpawnArea = spawnArea;
+    }
+
+    private void OnDestroy()
+    {
+        active = false;
+
+        StopAllCoroutines();
     }
 
     private void Update()
@@ -70,6 +109,7 @@ public class EnemyController : MonoBehaviour
             navMeshAgent.speed = newSpeed;
             
         }
+
 
         switch (enemyState)
         {
@@ -148,9 +188,72 @@ public class EnemyController : MonoBehaviour
 
                     break;
                 }
-        }   
+        }
+
+        // Calculate the distance between player and enemy
+        float distance = Vector3.Distance(player.transform.position, transform.position);
+
+        // Play heartbeat at intervals
+        if (distance < maxDistance)
+        {
+            float newInterval = currentInterval;
+            if (distance > 8)
+            {
+                newInterval = 2;
+            }
+            else if (distance <= 8 && distance > 4)
+            {
+                newInterval = 1;
+            }
+            else if (distance <= 4)
+                newInterval = 0.5f;
+
+            //if (currentInterval != newInterval)
+            //{
+            //    currentInterval = newInterval;
+            //    if (coroutine != null)
+            //    {
+            //        StopCoroutine(coroutine);
+            //        coroutine = null;
+            //    }
+            //    coroutine = StartCoroutine(DoHearbeat());
+            //}
+
+            if (!audioSource.isPlaying)
+            {
+                if (currentInterval != newInterval)
+                {
+                    CancelInvoke("PlayHeartbeat");
+                    currentInterval = newInterval;
+                }
+
+                playHeartbeat = true;
+                InvokeRepeating("PlayHeartbeat", 0f, currentInterval);
+            }
+        }
+        else
+        {
+            playHeartbeat = false;
+            //if(coroutine != null)
+            //{
+            //    StopCoroutine(coroutine);
+            //    coroutine = null;
+            //}
+            CancelInvoke("PlayHeartbeat"); // Stop playing the heartbeat sound
+        }
     }
 
-
+    IEnumerator DoHearbeat()
+    {
+        Debug.Log("Coroutine gestartet");
+        playHeartbeat = true;
+        while (true)
+        {
+            yield return new WaitForSeconds(currentInterval);
+            Debug.Log("Current Interval = " + currentInterval);
+            if (!audioSource.isPlaying)
+                PlayHeartbeat();
+        }
+    }
 
 }
