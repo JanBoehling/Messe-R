@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Transform PlayerCamera;
-    public float CameraSensibility = 800f;
     private float XRotation = 0f;
 
     private float MouseX = 0;
@@ -20,8 +19,14 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MouseX = Input.GetAxis("Mouse X") * CameraSensibility * Time.deltaTime;
-        MouseY = Input.GetAxis("Mouse Y") * CameraSensibility * Time.deltaTime;
+        if(GameManager.Instance == null)
+        {
+            Debug.LogError("Game Manger is null");
+            return;
+        }
+
+        MouseX = Input.GetAxis("Mouse X") * GameManager.Instance.CameraSensibility * Time.deltaTime;
+        MouseY = Input.GetAxis("Mouse Y") * GameManager.Instance.CameraSensibility * Time.deltaTime;
 
         XRotation -= MouseY;
         XRotation = Mathf.Clamp(XRotation, -90f, 90f);

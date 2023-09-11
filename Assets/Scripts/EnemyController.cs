@@ -14,7 +14,8 @@ public class EnemyController : MonoBehaviour
 
     private GameObject player;
 
-    private float maxViewDistance = 60f;
+    public float maxViewDistance = 15f;
+    public float waitForDespawnTime = 3f;
 
     private float elapsedTime = 0;
 
@@ -36,6 +37,7 @@ public class EnemyController : MonoBehaviour
         layerMaskValue = LayerMask.NameToLayer("LookThrough");
         navMeshAgent = GetComponent<NavMeshAgent>();
         initialSpeed = navMeshAgent.speed;
+        Debug.Log("Initial Ghost speed is = " + initialSpeed);
         player =  GameObject.FindGameObjectWithTag("Player");
         if(player == null)
         {
@@ -64,7 +66,9 @@ public class EnemyController : MonoBehaviour
         
         if(GameManager.Instance != null)
         {
-            navMeshAgent.speed = initialSpeed + (GameManager.Instance.OrganCounter * speedMultiplier);
+            float newSpeed = initialSpeed + ((GameManager.Instance.OrganCounter * initialSpeed) * speedMultiplier);
+            navMeshAgent.speed = newSpeed;
+            
         }
 
         switch (enemyState)
@@ -131,7 +135,7 @@ public class EnemyController : MonoBehaviour
 
                     elapsedTime += Time.deltaTime;
 
-                    if(elapsedTime > 5)
+                    if(elapsedTime > waitForDespawnTime)
                     {
                         if (GameManager.Instance != null)
                         {

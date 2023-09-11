@@ -7,12 +7,19 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set;}
 
+    public float CameraSensibility = 550f;
+
     public GameObject EnemyPrefab;
     public bool EnemyCanSpawn = false;
     public bool IsEnemySpawned = false;
     public int CounterOfOrgans;
     [Tooltip("In Seconds")]
     public float StartSpawnCooldown = 20f;
+
+    public void ChangeCameraSensibility(float value)
+    {
+        CameraSensibility = value;
+    }
 
     public void GameOver()
     {

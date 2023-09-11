@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,10 +15,21 @@ public class PlayerMovement : MonoBehaviour
     private float baseHeight;
     private bool isSneaking;
 
+    private float initialStamina = 7f;
+    public float currentStamina;
+    private float staminaIncreaseSpeed = 2f;
+
+    public GameObject StaminaContainer = null;
+    public Image StaminaBar = null;
+
+    private float moveSpeed;
+
     private AudioSource audioSource;
 
     private void Awake()
     {
+        moveSpeed = speed;
+        currentStamina = initialStamina;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -29,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         MovePlayer();
+        UpdateUIVisibility();
 
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
@@ -38,18 +52,49 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        audioSource.Play();
+        float staminaDecreaseRate = 0;
 
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime));
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed = speed + sprint;
+            if (currentStamina > 0)
+            {
+                staminaDecreaseRate = Time.deltaTime * 3;
+                moveSpeed = sprint;
+            }
+            else
+            {
+                moveSpeed = speed;
+            }
         }
+        else
+        {
+            if (currentStamina < initialStamina)
+            {
+                currentStamina += Time.deltaTime * staminaIncreaseSpeed;
+            }
+        }
+
+        currentStamina = Mathf.Clamp(currentStamina - staminaDecreaseRate, 0, initialStamina);
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            speed = speed - sprint;
+            moveSpeed = speed;
+        }
+
+        transform.Translate(new Vector3(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime, 0, Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime));
+    }
+
+    private void UpdateUIVisibility()
+    {
+        if (StaminaContainer != null)
+        {
+            StaminaContainer.SetActive(currentStamina < initialStamina);
+        }
+
+        if (StaminaBar != null)
+        {
+            float value = Mathf.Clamp01(currentStamina / initialStamina);
+            StaminaBar.fillAmount = value;
         }
     }
 
